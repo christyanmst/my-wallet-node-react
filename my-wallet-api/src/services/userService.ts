@@ -1,6 +1,6 @@
 import { compare, hash } from "bcryptjs";
 import { CreateUserRequest, AuthRequest, AuthResponse } from "../models/userModel";
-import { UserRepository } from "../repositories/UserRepository";
+import { UserRepository } from "../repositories/userRepository";
 
 class UserService {
   async createUser({
