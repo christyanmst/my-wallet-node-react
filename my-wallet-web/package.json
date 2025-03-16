@@ -14,7 +14,8 @@
     "nookies": "^2.5.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-toastify": "^11.0.5"
+    "react-toastify": "^11.0.5",
+    "styled-components": "^6.1.15"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
