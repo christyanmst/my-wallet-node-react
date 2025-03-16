@@ -15,3 +15,13 @@ export interface AuthResponse {
   email: string;
   token: string;
 }
+
+export interface MyProfileRequest {
+  userId: number;
+}
+
+export interface MyProfileResponse {
+  id: number;
+  username: string;
+  email: string;
+}

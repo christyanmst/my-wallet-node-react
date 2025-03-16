@@ -25,6 +25,15 @@ class UserController {
     return res.json(user);
   }
 
+  async myProfile(req: Request, res: Response) {
+    const userId = req.user_id;
+
+    const userService = new UserService();
+
+    const profile = await userService.myProfile({ userId });
+
+    return res.json(profile);
+  }
 }
 
 export { UserController };

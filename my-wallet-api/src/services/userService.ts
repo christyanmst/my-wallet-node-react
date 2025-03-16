@@ -1,5 +1,11 @@
 import { compare, hash } from "bcryptjs";
-import { CreateUserRequest, AuthRequest, AuthResponse } from "../models/userModel";
+import {
+  CreateUserRequest,
+  AuthRequest,
+  AuthResponse,
+  MyProfileRequest,
+  MyProfileResponse,
+} from "../models/userModel";
 import { UserRepository } from "../repositories/userRepository";
 import { sign } from "jsonwebtoken";
 
@@ -54,15 +60,15 @@ class UserService {
 
     const token = sign(
       {
-          username: user.username,
-          email: user.email,
-      }, 
+        username: user.username,
+        email: user.email,
+      },
       process.env.JWT_SECRET,
       {
-          subject: String(user.id),
-          expiresIn: '15d',
+        subject: String(user.id),
+        expiresIn: "15d",
       }
-  );
+    );
 
     return {
       id: user.id,
@@ -70,6 +76,18 @@ class UserService {
       email: user.email,
       token,
     };
+  }
+
+  async myProfile({ userId }: MyProfileRequest): Promise<MyProfileResponse> {
+    if (!userId) {
+      throw Object.assign(new Error("Missing Parameters"), { httpStatus: 400 });
+    }
+
+    const userRepository = new UserRepository();
+
+    const userInfo = await userRepository.findUserById(userId);
+
+    return userInfo;
   }
 }
 
