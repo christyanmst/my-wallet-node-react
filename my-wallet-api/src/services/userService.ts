@@ -1,6 +1,7 @@
 import { compare, hash } from "bcryptjs";
 import { CreateUserRequest, AuthRequest, AuthResponse } from "../models/userModel";
 import { UserRepository } from "../repositories/userRepository";
+import { sign } from "jsonwebtoken";
 
 class UserService {
   async createUser({
@@ -51,10 +52,23 @@ class UserService {
       throw Object.assign(new Error("Credential Error"), { httpStatus: 401 });
     }
 
+    const token = sign(
+      {
+          username: user.username,
+          email: user.email,
+      }, 
+      process.env.JWT_SECRET,
+      {
+          subject: String(user.id),
+          expiresIn: '15d',
+      }
+  );
+
     return {
       id: user.id,
       username: user.username,
       email: user.email,
+      token,
     };
   }
 }
